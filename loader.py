@@ -13,9 +13,9 @@ def load_data():
     x_train = np.empty((num_train_samples, 3, 32, 32), dtype='uint8')
     y_train = np.empty((num_train_samples,), dtype='uint8')
 
-    # path = os.path.join('/cluster/home/sayvaz', 'sparsity', dirname)
-    path = dirname
-    
+    path = os.path.join('/cluster/home/sayvaz', 'sparsity', dirname)
+    # path = dirname
+
     for i in range(1, 6):
         fpath = os.path.join(path, 'data_batch_' + str(i))
         (x_train[(i - 1) * 10000:i * 10000, :, :, :],
@@ -45,8 +45,8 @@ class Loader(object):
         ## prepare data
         ###
         if dataset == 'mnist':
-            # mnist_path = os.path.join('/cluster/home/sayvaz', 'sparsity', 'mnist.npz')
-            mnist_path = 'mnist.npz'
+            mnist_path = os.path.join('/cluster/home/sayvaz', 'sparsity', 'mnist.npz')
+            # mnist_path = 'mnist.npz'
 
             data = np.load(mnist_path)
             (train_images, train_labels) = data['x_train'], data['y_train']
