@@ -7,7 +7,6 @@ import argparse
 
 import tensorflow as tf
 import csv
-import deepdish
 
 import utils
 from loader import Loader
