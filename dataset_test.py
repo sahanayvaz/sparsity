@@ -2,6 +2,10 @@ import matplotlib.pyplot as plt
 from tensorflow.keras import datasets
 import numpy as np
 
+data = np.load('./mnist.npz')
+(train_images, train_labels) = data['x_train'], data['y_train']
+print(train_images.shape, train_labels.shape)
+'''
 (train_images, train_labels), (test_images, test_labels) = datasets.cifar10.load_data()
 print(np.max(train_images), np.min(train_images))
 print(train_labels.shape, train_labels[0])
@@ -20,3 +24,4 @@ for i in range(25):
     # which is why you need the extra index
     # plt.xlabel(class_names[train_labels[i][0]])
 plt.show()
+'''

@@ -20,7 +20,10 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
         if prune == 'fixed_random':
             # mask = np.random.randint(2, size=[in_dim, units])
             mask_w = np.random.binomial(n=1, p=sparsity, size=[in_dim, units])
-            mask_w = tf.convert_to_tensor(mask_w, dtype=tf.float32)
+            # mask_w = tf.convert_to_tensor(mask_w, dtype=tf.float32)
+            mask_w = tf.get_variable(name='mask',
+                                     initializer=mask_w,
+                                     trainable=False)
             w = tf.multiply(w, mask_w)
 
         return activation(tf.add(tf.matmul(inpt, w), b))

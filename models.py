@@ -19,7 +19,7 @@ class LeNetFC(object):
         # dummy mode
         self.mode = tf.placeholder(tf.bool, name='mode')
 
-        with tf.variable_scope('lenet-300-100'):
+        with tf.variable_scope('net'):
             out = fc(self.x_ph,
                      units=300, 
                      activation=tf.nn.relu,
@@ -56,7 +56,7 @@ class LeNet5(object):
         self.y_ph = tf.placeholder(tf.uint8, shape=[None, ], name='y_ph')
         self.mode = tf.placeholder(tf.bool, name='mode')
 
-        with tf.variable_scope('lenet-5'):
+        with tf.variable_scope('net'):
             out = conv2d(inputs=self.x_ph,
                          filters=6,
                          kernel_size=5,
@@ -122,7 +122,7 @@ class AlexNetS(object):
         self.y_ph = tf.placeholder(tf.uint8, shape=[None, ], name='y_ph')
         self.mode = tf.placeholder(tf.bool, name='mode')
 
-        with tf.variable_scope('alexnet-s'):
+        with tf.variable_scope('net'):
             out = conv2d(inputs=self.x_ph,
                          filters=96,
                          kernel_size=11,
