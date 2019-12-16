@@ -98,13 +98,11 @@ class Trainer(object):
         for w in weights:
             print(w)
 
-
         gradsandvar = optimizer.compute_gradients(self.mean_loss, params)
 
         # add zeroed gradients if prune is not None
         self.prune = prune
         self.sparsity = sparsity
-
 
         # update batch normalization if used
         update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)

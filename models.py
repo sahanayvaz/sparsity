@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-from layers import fc, conv2d
+from layers import fc, conv2d, rss, rss_path
 
 class LeNetFC(object):
     def __init__(self,
@@ -20,27 +20,40 @@ class LeNetFC(object):
         self.mode = tf.placeholder(tf.bool, name='mode')
 
         with tf.variable_scope('net'):
-            out = fc(self.x_ph,
-                     units=300, 
-                     activation=tf.nn.relu,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_1')
-            
-            out = fc(out,
-                     units=100, 
-                     activation=tf.nn.relu,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_2')
-            
-            out = fc(out,
-                     units=10,
-                     activation=tf.nn.softmax,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_3')
-            
+            if prune == 'fixed_random':
+                out = fc(self.x_ph,
+                         units=300, 
+                         activation=tf.nn.relu,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_1')
+                
+                out = fc(out,
+                         units=100, 
+                         activation=tf.nn.relu,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_2')
+                out = fc(out,
+                         units=10,
+                         activation=tf.nn.softmax,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_3')
+            elif prune == 'fixed_skip':
+                out = self.x_ph
+                out = rss(out,
+                          units=[300, 100, 10],
+                          activations=[tf.nn.relu, tf.nn.relu, tf.nn.softmax],
+                          sparsity=sparsity,
+                          name='rss')
+            elif prune == 'fixed_skip_path':
+                out = self.x_ph
+                out = rss_path(out,
+                               units=[300, 100, 10],
+                               activations=[tf.nn.relu, tf.nn.relu, tf.nn.softmax],
+                               sparsity=sparsity,
+                               name='rss_path')
             self.y_pred = out
 
 class LeNet5(object):
@@ -85,27 +98,41 @@ class LeNet5(object):
                                               name='pool_2')
             out = tf.layers.flatten(out)
             
-            out = fc(out,
-                     units=120, 
-                     activation=tf.nn.tanh,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_1')
-            
-            out = fc(out,
-                     units=84, 
-                     activation=tf.nn.tanh,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_2')
-            
-            out = fc(out,
-                     units=10,
-                     activation=tf.nn.softmax,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_3')
-            
+            if prune == 'fixed_random':
+                out = fc(out,
+                         units=120, 
+                         activation=tf.nn.tanh,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_1')
+                
+                out = fc(out,
+                         units=84, 
+                         activation=tf.nn.tanh,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_2')
+                
+                out = fc(out,
+                         units=10,
+                         activation=tf.nn.softmax,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_3')
+
+            elif prune == 'fixed_skip':
+                out = rss(out,
+                          units=[120, 84, 10],
+                          activations=[tf.nn.tanh, tf.nn.tanh, tf.nn.softmax],
+                          sparsity=sparsity,
+                          name='rss')
+            elif prune == 'fixed_skip_path':
+                out = rss_path(out,
+                          units=[120, 84, 10],
+                          activations=[tf.nn.tanh, tf.nn.tanh, tf.nn.softmax],
+                          sparsity=sparsity,
+                          name='rss')
+
             self.y_pred = out
 
 
@@ -174,28 +201,44 @@ class AlexNetS(object):
                 out.shape: {}
 
                 '''.format(out.shape))
-            out = fc(out,
-                     units=512, 
-                     activation=tf.nn.relu,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_1')
+            if prune == 'fixed_random':
+                out = fc(out,
+                         units=512, 
+                         activation=tf.nn.relu,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_1')
+                
+                out = fc(out,
+                         units=512, 
+                         activation=tf.nn.relu,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_2')
+                
+                out = fc(out,
+                         units=10,
+                         activation=tf.nn.softmax,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_3')
+
+            elif prune == 'fixed_skip':
+                out = rss(inpt,
+                          units=[512, 512, 10],
+                          activations=[tf.nn.relu, tf.nn.relu, tf.nn.softmax],
+                          sparsity=sparsity,
+                          name='rss')
             
-            out = fc(out,
-                     units=512, 
-                     activation=tf.nn.relu,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_2')
-            
-            out = fc(out,
-                     units=10,
-                     activation=tf.nn.softmax,
-                     prune=prune,
-                     sparsity=sparsity,
-                     name='layer_3')
+            elif prune == 'fixed_skip_path':
+                out = rss_path(inpt,
+                          units=[512, 512, 10],
+                          activations=[tf.nn.relu, tf.nn.relu, tf.nn.softmax],
+                          sparsity=sparsity,
+                          name='rss')
             
             self.y_pred = out
+            
 # do NOT forget to use weight_initializer, bias_initializer,
 # prune and sparsity
 def model_builder(architecture,

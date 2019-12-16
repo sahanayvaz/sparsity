@@ -40,7 +40,7 @@ if __name__ == '__main__':
     sparsity: level of sparsity, 1.0 == no sparsity (default), 
                                  0.10 == prune %90 of weights
     prune: how to prune (none, 
-                         fixed_random, fixed_skipped, fixed_expander, 
+                         fixed_random, fixed_skip, fixed_expander, 
                          lws, snip,
                          weighted_lws, weighted_snip)
 

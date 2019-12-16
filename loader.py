@@ -45,8 +45,8 @@ class Loader(object):
         ## prepare data
         ###
         if dataset == 'mnist':
-            mnist_path = os.path.join('/cluster/home/sayvaz', 'sparsity', 'mnist.npz')
-            # mnist_path = 'mnist.npz'
+            # mnist_path = os.path.join('/cluster/home/sayvaz', 'sparsity', 'mnist.npz')
+            mnist_path = 'mnist.npz'
 
             data = np.load(mnist_path)
             (train_images, train_labels) = data['x_train'], data['y_train']
