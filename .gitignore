@@ -1,0 +1,4 @@
+__pycache__/
+log_dir/
+save_dir/
+tiny-imagenet-200/
