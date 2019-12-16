@@ -86,7 +86,7 @@ if __name__ == '__main__':
     parser.add_argument('--learning_rate_scheduler', type=str, default=None)
     parser.add_argument('--nsamples_mb', type=int, default=100)
     parser.add_argument('--nepochs', type=int, default=10)
-    parser.add_argument('--nexps', type=int, default=10)
+    parser.add_argument('--nexps', type=int, default=5)
 
     # dataset related
     parser.add_argument('--augment', type=str, default=None)
