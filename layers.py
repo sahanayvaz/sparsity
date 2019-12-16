@@ -13,17 +13,20 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
                             shape=[in_dim, units],
                             initializer=tf.initializers.orthogonal(1.0),
                             trainable=True)
+        tf.add_to_collection('weights', w)
         b = tf.get_variable(name='b',
                             shape=[units,],
                             initializer=tf.constant_initializer(0.01))
         
         if prune == 'fixed_random':
             # mask = np.random.randint(2, size=[in_dim, units])
-            mask_w = np.random.binomial(n=1, p=sparsity, size=[in_dim, units])
+            mask_w = np.random.binomial(n=1, p=sparsity, size=[in_dim, units]).astype(np.float32)
             # mask_w = tf.convert_to_tensor(mask_w, dtype=tf.float32)
             mask_w = tf.get_variable(name='mask',
                                      initializer=mask_w,
+                                     dtype=tf.float32,
                                      trainable=False)
+            tf.add_to_collection('masks', mask_w)
             w = tf.multiply(w, mask_w)
 
         return activation(tf.add(tf.matmul(inpt, w), b))
@@ -60,12 +63,17 @@ def conv2d(inputs,
                             shape=[kernel_size, kernel_size, in_channels, out_channels],
                             dtype=tf.float32,
                             initializer=kernel_initializer)
-        
+        tf.add_to_collection('weights', W)
+
         if prune == 'fixed_random':
-            mask = np.random.binomial(n=1, p=sparsity,
-                                      size=[kernel_size, kernel_size, in_channels, out_channels])
-            mask = tf.convert_to_tensor(mask, dtype=tf.float32)
-            W = tf.multiply(W, mask)
+            mask_w = np.random.binomial(n=1, p=sparsity,
+                                      size=[kernel_size, kernel_size, in_channels, out_channels]).astype(np.float32)
+            mask_w = tf.get_variable(name='mask',
+                                     initializer=mask_w, 
+                                     dtype=tf.float32,
+                                     trainable=False)
+            tf.add_to_collection('masks', mask_w)
+            W = tf.multiply(W, mask_w)
 
         b = tf.get_variable(name='b', 
                             shape=[out_channels], 

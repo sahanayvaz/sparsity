@@ -71,11 +71,40 @@ class Trainer(object):
 
         params = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
 
+        print('''
+
+            params
+
+            ''')
+        for p in params:
+            print(p)
+
+
+        print('''
+
+            masks
+
+            ''')
+        masks = tf.get_collection('masks')
+        for m in masks:
+            print(m)
+
+        print('''
+
+            weights
+
+            ''')
+        weights = tf.get_collection('weights')
+        for w in weights:
+            print(w)
+
+
         gradsandvar = optimizer.compute_gradients(self.mean_loss, params)
 
         # add zeroed gradients if prune is not None
         self.prune = prune
         self.sparsity = sparsity
+
 
         # update batch normalization if used
         update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)

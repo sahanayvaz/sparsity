@@ -2,7 +2,7 @@ import os
 import numpy as np
 import tensorflow as tf
 
-results_dir = './log_dir/cifar_test/'
+results_dir = './log_dir/cifar10_test/'
 
 results_npz = os.listdir(results_dir)
 

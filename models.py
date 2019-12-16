@@ -202,7 +202,7 @@ def model_builder(architecture,
                   prune,
                   sparsity,
                   input_shape):
-    # prune is only effective at this level iff fixed
+    # prune is only effective at this level iff fixed    
     if architecture == 'lenet-300-100':
         return LeNetFC(prune,
                        sparsity,
