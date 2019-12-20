@@ -2,8 +2,8 @@ import os
 import shutil
 
 
-log_dir = '/cluster/sayvaz/sparsity/log_dir'
-save_dir = '/cluster/sayvaz/sparsity/save_dir'
+log_dir = '/cluster/home/sayvaz/sparsity/log_dir'
+save_dir = '/cluster/home/sayvaz/sparsity/save_dir'
 os.makedirs(save_dir, exist_ok=True)
 
 list_dir = os.listdir(log_dir)
