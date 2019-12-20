@@ -1,6 +1,6 @@
 import os
 import numpy as np
-# import tensorflow as tf
+import argparse
 
 '''
 m = 'lenet'
@@ -12,8 +12,13 @@ for c in check_results:
 '''
 
 # c = 'lenet-CIFAR10-rs-2-wrap'
-c = 'lenet-MNIST-rs-2'
-results_dir = os.path.join('./log_dir', c)
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--exp_name', type=str, default='lenet-MNIST-rs-2')
+
+args = parser.parse_args()
+
+results_dir = os.path.join('./log_dir', args.exp_name)
 
 results_npz = os.listdir(results_dir)
 

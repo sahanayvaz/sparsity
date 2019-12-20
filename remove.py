@@ -19,5 +19,6 @@ for l in list_dir:
 				file_path = os.path.join(full_l, j)
 				shutil.move(file_path, save_dir_l)
 			except:
+				print('passing {}'.format(j))
 				pass
 print('done')
