@@ -32,6 +32,6 @@ for r_npz in results_npz:
 
 test_acc = np.asarray(test_acc)
 
-print(c)
+print(args.exp_name)
 print(100 * (1.0 - np.mean(test_acc, 0)))
 print(np.std(test_acc, 0))
