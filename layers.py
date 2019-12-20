@@ -203,7 +203,7 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
                                      initializer=tf.constant_initializer(0.01))
             expanded_W = tf.expand_dims(tf.expand_dims(w, 0), -1)
             conv_W = tf.nn.conv2d(input=expanded_W,
-                                  filter=warp_W,
+                                  filter=wrap_W,
                                   strides=[1, stride_size, stride_size, 1],
                                   padding='SAME',
                                   name='wrapped_conv2d_')
@@ -212,7 +212,7 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
                                     name='wrapped_bias_')
             w = tf.squeeze(expanded_W)
             print('shape of wrapped w: {}'.format(tf.shape(w)))
-            
+
         return activation(tf.add(tf.matmul(inpt, w), b))
 
 def expander_conv2d(inputs, 
