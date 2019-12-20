@@ -5,8 +5,8 @@ import argparse
 m = 'lenet'
 d = 'MNIST'
 check_results = ['{}-{}-dense'.format(m, d),
-                 '{}-{}-rs-10-wrap'.format(m, d),
-                 '{}-{}-rs-10'.format(m, d)]
+                 '{}-{}-rs-2-wrap'.format(m, d),
+                 '{}-{}-rs-2'.format(m, d)]
 for c in check_results:
 	results_dir = os.path.join('./log_dir', c)
 	results_npz = os.listdir(results_dir)

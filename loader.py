@@ -4,7 +4,7 @@ data loading pipeline for efficient input/output
 
 import os
 import numpy as np
-# from tensorflow.python.keras.datasets.cifar import load_batch
+from tensorflow.python.keras.datasets.cifar import load_batch
 
 def load_data():
     dirname = 'cifar-10-batches-py'
