@@ -160,7 +160,7 @@ class Trainer(object):
                     test_acc += acc * mbidx.shape[0]
                 test_accs.append(test_acc / test_idx.shape[0])
 
-        # log_file = os.path.join(self.log_dir, self.exp_name)
+        log_file = os.path.join(self.log_dir, self.exp_name)
         np.savez_compressed(log_file, train_losses=np.asarray(train_losses),
                                       train_accs=np.asarray(train_accs),
                                       test_accs=np.asarray(test_accs))
