@@ -205,7 +205,7 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
 
             # then apply wrap
             out_dim = 1
-            kernel_size, stride_size = 9, 1
+            kernel_size, stride_size = 18, 1
             wrap_W = tf.get_variable(name='wrap_W',
                                      shape=[kernel_size, kernel_size, 1, out_dim],
                                      dtype=tf.float32,
