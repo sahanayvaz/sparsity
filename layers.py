@@ -223,8 +223,8 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
             conv_W = tf.nn.bias_add(value=conv_W,
                                     bias=wrap_b,
                                     name='wrapped_bias_')
-            conv_W = activation(conv_W)
-            
+            conv_W = tf.nn.tanh(conv_W)
+
             w = tf.squeeze(tf.reduce_max(expanded_W, -1))
             print('shape of wrapped w: {}'.format(w.shape))
 

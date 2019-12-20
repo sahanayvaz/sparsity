@@ -1,6 +1,6 @@
 import os
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
 
 '''
 m = 'lenet'
@@ -11,7 +11,8 @@ check_results = ['{}-{}-dense'.format(m, d),
 for c in check_results:
 '''
 
-c = 'lenet-MNIST-rs-10-wrap'
+# c = 'lenet-CIFAR10-rs-2-wrap'
+c = 'lenet-CIFAR10-rs-2-wrap'
 results_dir = os.path.join('./log_dir', c)
 
 results_npz = os.listdir(results_dir)
