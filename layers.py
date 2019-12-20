@@ -204,8 +204,8 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
             w = tf.multiply(w, mask_w)
 
             # then apply wrap
-            out_dim = 9
-            kernel_size, stride_size = 3, 1
+            out_dim = 1
+            kernel_size, stride_size = 9, 1
             wrap_W = tf.get_variable(name='wrap_W',
                                      shape=[kernel_size, kernel_size, 1, out_dim],
                                      dtype=tf.float32,
@@ -223,7 +223,7 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
             conv_W = tf.nn.bias_add(value=conv_W,
                                     bias=wrap_b,
                                     name='wrapped_bias_')
-            conv_W = tf.nn.tanh(conv_W)
+            # conv_W = tf.nn.tanh(conv_W)
 
             w = tf.squeeze(tf.reduce_max(expanded_W, -1))
             print('shape of wrapped w: {}'.format(w.shape))

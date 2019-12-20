@@ -12,7 +12,7 @@ for c in check_results:
 '''
 
 # c = 'lenet-CIFAR10-rs-2-wrap'
-c = 'lenet-CIFAR10-rs-2-wrap'
+c = 'lenet-MNIST-rs-2'
 results_dir = os.path.join('./log_dir', c)
 
 results_npz = os.listdir(results_dir)
