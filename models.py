@@ -20,7 +20,7 @@ class LeNetFC(object):
         self.mode = tf.placeholder(tf.bool, name='mode')
 
         with tf.variable_scope('net'):
-            if prune == 'fixed_random':
+            if prune == 'fixed_random' or prune == 'fixed_random_wrap':
                 out = fc(self.x_ph,
                          units=300, 
                          activation=tf.nn.relu,
@@ -98,7 +98,7 @@ class LeNet5(object):
                                               name='pool_2')
             out = tf.layers.flatten(out)
             
-            if prune == 'fixed_random':
+            if prune == 'fixed_random' or prune == 'fixed_random_wrap':
                 out = fc(out,
                          units=120, 
                          activation=tf.nn.tanh,
@@ -201,7 +201,7 @@ class AlexNetS(object):
                 out.shape: {}
 
                 '''.format(out.shape))
-            if prune == 'fixed_random':
+            if prune == 'fixed_random' or prune == 'fixed_random_wrap':
                 out = fc(out,
                          units=512, 
                          activation=tf.nn.relu,
