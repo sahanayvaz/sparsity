@@ -156,8 +156,8 @@ if __name__ == '__main__':
             model = model_builder(architecture=args.architecture,
                                   prune=args.prune,
                                   sparsity=args.sparsity,
-                                  out_dim=out_dim,
-                                  kernel_size=kernel_size,
+                                  out_dim=args.out_dim,
+                                  kernel_size=args.kernel_size,
                                   input_shape=data.input_shape)
 
             if args.learning_rate_scheduler is None:
