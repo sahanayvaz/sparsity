@@ -228,6 +228,43 @@ def fc(inpt, units, activation, prune=None, sparsity=None,
             w = tf.squeeze(tf.reduce_max(expanded_W, -1))
             print('shape of wrapped w: {}'.format(w.shape))
 
+
+        elif prune == 'fixed_random_wrap_c':
+            # first apply the random mask
+            # mask = np.random.randint(2, size=[in_dim, units])
+            mask_w = np.random.binomial(n=1, p=sparsity, size=[in_dim, units]).astype(np.float32)
+            # mask_w = tf.convert_to_tensor(mask_w, dtype=tf.float32)
+            mask_w = tf.get_variable(name='mask',
+                                     initializer=mask_w,
+                                     dtype=tf.float32,
+                                     trainable=False)
+            tf.add_to_collection('masks', mask_w)
+            w = tf.multiply(w, mask_w)
+
+            # then apply wrap
+            out_dim = 9
+            kernel_size, stride_size = 3, 1
+            wrap_W = tf.get_variable(name='wrap_W',
+                                     shape=[kernel_size, kernel_size, 1, out_dim],
+                                     dtype=tf.float32,
+                                     initializer=tf.initializers.orthogonal(1.0))
+            wrap_b = tf.get_variable(name='wrap_b',
+                                     shape=[out_dim],
+                                     dtype=tf.float32,
+                                     initializer=tf.constant_initializer(0.01))
+            expanded_W = tf.expand_dims(tf.expand_dims(w, 0), -1)
+            conv_W = tf.nn.conv2d(input=expanded_W,
+                                  filter=wrap_W,
+                                  strides=[1, stride_size, stride_size, 1],
+                                  padding='SAME',
+                                  name='wrapped_conv2d_')
+            conv_W = tf.nn.bias_add(value=conv_W,
+                                    bias=wrap_b,
+                                    name='wrapped_bias_')
+
+            w = tf.squeeze(tf.reduce_max(expanded_W, -1))
+            print('shape of wrapped_c w: {}'.format(w.shape))
+
         return activation(tf.add(tf.matmul(inpt, w), b))
 
 def expander_conv2d(inputs, 

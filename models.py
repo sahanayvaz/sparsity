@@ -20,27 +20,7 @@ class LeNetFC(object):
         self.mode = tf.placeholder(tf.bool, name='mode')
 
         with tf.variable_scope('net'):
-            if prune == 'fixed_random' or prune == 'fixed_random_wrap':
-                out = fc(self.x_ph,
-                         units=300, 
-                         activation=tf.nn.relu,
-                         prune=prune,
-                         sparsity=sparsity,
-                         name='layer_1')
-                
-                out = fc(out,
-                         units=100, 
-                         activation=tf.nn.relu,
-                         prune=prune,
-                         sparsity=sparsity,
-                         name='layer_2')
-                out = fc(out,
-                         units=10,
-                         activation=tf.nn.softmax,
-                         prune=prune,
-                         sparsity=sparsity,
-                         name='layer_3')
-            elif prune == 'fixed_skip':
+            if prune == 'fixed_skip':
                 out = self.x_ph
                 out = rss(out,
                           units=[300, 100, 10],
@@ -54,6 +34,26 @@ class LeNetFC(object):
                                activations=[tf.nn.relu, tf.nn.relu, tf.nn.softmax],
                                sparsity=sparsity,
                                name='rss_path')
+            else:
+                out = fc(self.x_ph,
+                         units=300, 
+                         activation=tf.nn.relu,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_1')
+                out = fc(out,
+                         units=100, 
+                         activation=tf.nn.relu,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_2')
+                out = fc(out,
+                         units=10,
+                         activation=tf.nn.softmax,
+                         prune=prune,
+                         sparsity=sparsity,
+                         name='layer_3')
+            
             self.y_pred = out
 
 class LeNet5(object):
