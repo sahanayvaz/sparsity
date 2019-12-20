@@ -7,6 +7,8 @@ class LeNetFC(object):
     def __init__(self,
                  prune,
                  sparsity,
+                 out_dim,
+                 kernel_size,
                  input_shape):
 
         # type of architecture
@@ -40,18 +42,24 @@ class LeNetFC(object):
                          activation=tf.nn.relu,
                          prune=prune,
                          sparsity=sparsity,
+                         out_dim=out_dim,
+                         kernel_size=kernel_size,
                          name='layer_1')
                 out = fc(out,
                          units=100, 
                          activation=tf.nn.relu,
                          prune=prune,
                          sparsity=sparsity,
+                         out_dim=out_dim,
+                         kernel_size=kernel_size,
                          name='layer_2')
                 out = fc(out,
                          units=10,
                          activation=tf.nn.softmax,
                          prune=prune,
                          sparsity=sparsity,
+                         out_dim=out_dim,
+                         kernel_size=kernel_size,
                          name='layer_3')
             
             self.y_pred = out
@@ -244,11 +252,15 @@ class AlexNetS(object):
 def model_builder(architecture,
                   prune,
                   sparsity,
+                  out_dim,
+                  kernel_size,
                   input_shape):
     # prune is only effective at this level iff fixed    
     if architecture == 'lenet-300-100':
         return LeNetFC(prune,
                        sparsity,
+                       out_dim,
+                       kernel_size,
                        input_shape)
 
     elif architecture == 'lenet-5':

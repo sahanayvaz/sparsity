@@ -88,6 +88,9 @@ if __name__ == '__main__':
     parser.add_argument('--nepochs', type=int, default=10)
     parser.add_argument('--nexps', type=int, default=5)
 
+    parser.add_argument('--out_dim', type=int, default=0)
+    parser.add_argument('--kernel_size', type=int, default=0)
+
     # dataset related
     parser.add_argument('--augment', type=str, default=None)
 
@@ -153,6 +156,8 @@ if __name__ == '__main__':
             model = model_builder(architecture=args.architecture,
                                   prune=args.prune,
                                   sparsity=args.sparsity,
+                                  out_dim=out_dim,
+                                  kernel_size=kernel_size,
                                   input_shape=data.input_shape)
 
             if args.learning_rate_scheduler is None:
