@@ -15,6 +15,9 @@ for l in list_dir:
 		save_dir_l = os.path.join(save_dir, l)
 		os.makedirs(save_dir_l, exist_ok=True)
 		if not '.npz' in j:
-			file_path = os.path.join(full_l, j)
-			shutil.move(file_path, save_dir_l)
+			try:
+				file_path = os.path.join(full_l, j)
+				shutil.move(file_path, save_dir_l)
+			except:
+				pass
 print('done')
