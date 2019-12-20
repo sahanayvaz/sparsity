@@ -11,7 +11,7 @@ check_results = ['{}-{}-dense'.format(m, d),
 for c in check_results:
 '''
 
-c = 'mnist_test'
+c = 'lenet-MNIST-rs-10-wrap'
 results_dir = os.path.join('./log_dir', c)
 
 results_npz = os.listdir(results_dir)
@@ -21,7 +21,7 @@ for r_npz in results_npz:
     if 'npz' in r_npz:
         full_r_npz = os.path.join(results_dir, r_npz)
         r = np.load(full_r_npz)
-        # print(r['train_losses'].shape, r['train_accs'].shape, r['test_accs'].shape)
+        print(r['train_losses'].shape, r['train_accs'].shape, r['test_accs'].shape)
         test_acc.append(r['test_accs'])
 
 test_acc = np.asarray(test_acc)
