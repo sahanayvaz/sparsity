@@ -12,7 +12,9 @@ for l in list_dir:
 	full_l = os.path.join(log_dir, l)
 	l_dir = os.listdir(full_l)
 	for j in l_dir:
+		save_dir_l = os.path.join(save_dir, l)
+		os.makedirs(save_dir_l, exist_ok=True)
 		if not '.npz' in j:
 			file_path = os.path.join(full_l, j)
-			shutil.move(file_path, save_dir)
+			shutil.move(file_path, save_dir_l)
 print('done')
